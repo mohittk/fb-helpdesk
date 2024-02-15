@@ -18,11 +18,18 @@ export default function Login() {
         e.preventDefault();
         try {
             const response = await login_user(formData);
-            console.log(response);
-            alert(response.message);
+            if (response.tag) {
+                // Save token to local storage
+                localStorage.setItem('token', response.token);
 
-            if(response.tag){
+                // Save current time of login
+                const loginTime = new Date().getTime();
+                localStorage.setItem('loginTime', loginTime);
+
+                // Navigate to home page
                 navigate('/');
+            } else {
+                alert(response.message);
             }
         } catch(err){
             console.error('Error: ', err);

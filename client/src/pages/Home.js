@@ -1,13 +1,25 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import config from '../config';
 
 export default function Home() {
     const [isConnected, setIsConnected] = useState(false);
     const [integratedPage, setIntegratedPage] = useState('');
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
     
     const navigate = useNavigate();
     const accessToken = config.page_access_token;
+
+    useEffect(() => {
+        if(localStorage.getItem("token")){
+            setIsLoggedIn(true);
+        }
+        else{
+            setIsLoggedIn(false);
+        }
+    },[])
+
+    
 
     const handleConnectPage = async () => {
         try {
@@ -42,32 +54,48 @@ export default function Home() {
                     </h2>
                 </div>
 
-                {!isConnected ? (
-                    <div>
-                        <button
-                            onClick={handleConnectPage}
-                            type="button"
-                            className="flex w-full justify-center rounded-[4px] bg-indigo-900 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-900"
-                        >
-                            Connect Page
-                        </button>
-                    </div>
+                
+                {isLoggedIn ? (
+                    // User is logged in
+                    !isConnected ? (
+                        <div>
+                            <button
+                                onClick={handleConnectPage}
+                                type="button"
+                                className="flex w-full justify-center rounded-[4px] bg-indigo-900 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-900"
+                            >
+                                Connect Page
+                            </button>
+                        </div>
+                    ) : (
+                        <div>
+                            <p className="text-center text-gray-700 mb-4">Integrated page: <span className="font-bold">{integratedPage}</span></p>
+                            <button
+                                onClick={handleDeleteIntegration}
+                                type="button"
+                                className="flex w-full justify-center rounded-[4px] bg-red-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-red-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-500 mb-2"
+                            >
+                                Delete Integration
+                            </button>
+                            <button
+                                onClick={handleReplyToMessage}
+                                type="button"
+                                className="flex w-full justify-center rounded-[4px] bg-indigo-900 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-900"
+                            >
+                                Reply to Message
+                            </button>
+                        </div>
+                    )
                 ) : (
+                    // User is not logged in
                     <div>
-                        <p className="text-center text-gray-700 mb-4">Integrated page: <span className="font-bold">{integratedPage}</span></p>
+                        <p className="text-center text-gray-700 mb-2">Please login to see the page</p>
                         <button
-                            onClick={handleDeleteIntegration}
+                            onClick={() => navigate('/login')}
                             type="button"
-                            className="flex w-full justify-center rounded-[4px] bg-red-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-red-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-500 mb-2"
+                            className="flex w-full font-opensans justify-center rounded-[4px] bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-blue-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500"
                         >
-                            Delete Integration
-                        </button>
-                        <button
-                            onClick={handleReplyToMessage}
-                            type="button"
-                            className="flex w-full justify-center rounded-[4px] bg-indigo-900 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-900"
-                        >
-                            Reply to Message
+                            Login
                         </button>
                     </div>
                 )}
