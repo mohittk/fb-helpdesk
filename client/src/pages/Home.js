@@ -1,25 +1,34 @@
 import React, { useState } from 'react';
-import {useNavigate} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import config from '../config';
 
 export default function Home() {
     const [isConnected, setIsConnected] = useState(false);
     const [integratedPage, setIntegratedPage] = useState('');
+    
     const navigate = useNavigate();
+    const accessToken = config.page_access_token;
 
-    const handleConnectPage = () => {
-        // Simulate connecting to Facebook page
-        setIsConnected(true);
-        setIntegratedPage('Amazon business'); // Set the integrated page name
+    const handleConnectPage = async () => {
+        try {
+            const response = await fetch(`https://graph.facebook.com/v19.0/122106292460209152/accounts?access_token=${accessToken}`);
+            const data = await response.json();
+            if (data && data.data && data.data.length > 0) {
+                const pageName = data.data[0].name;
+                setIntegratedPage(pageName);
+                setIsConnected(true);
+            }
+        } catch (error) {
+            console.error('Error connecting to Facebook page:', error);
+        }
     };
 
     const handleDeleteIntegration = () => {
-        // Simulate deleting integration
         setIsConnected(false);
         setIntegratedPage('');
     };
 
     const handleReplyToMessage = () => {
-        // Handle reply to message action
         navigate('/agent');
         console.log('Reply to message');
     };
