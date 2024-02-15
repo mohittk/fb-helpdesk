@@ -1,8 +1,33 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {useNavigate} from 'react-router-dom';
+import { register_user } from '../controllers/userRoutes';
 
 export default function Signup() {
     const navigate = useNavigate();
+    const [formData, setFormData] = useState({
+        name: '',
+        email: '',
+        password: ''
+    });
+
+    const handleChange = async(e) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+    }
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const response = await register_user(formData);
+            console.log(response);
+            alert(response.message);
+            if(response.tag===true){
+                navigate('/login');
+            }
+            
+        } catch(err){
+            console.error('Error: ', err);
+        }
+    }
     return (
         <div className="flex items-center justify-center min-h-screen bg-indigo-900">
             <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
@@ -13,7 +38,7 @@ export default function Signup() {
                 </div>
 
                 <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-                    <form className="space-y-6" action="#" method="POST">
+                    <form className="space-y-6" onSubmit={handleSubmit}>
                         <div>
                             <label htmlFor="name" className="block text-[1rem] font-medium leading-6 text-gray-900">
                                 Name
@@ -25,6 +50,8 @@ export default function Signup() {
                                     type="text"
                                     autoComplete="name"
                                     required
+                                    value={formData.name}
+                                    onChange={handleChange}
                                     className="block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-900 sm:text-sm sm:leading-6"
                                 />
                             </div>
@@ -39,6 +66,8 @@ export default function Signup() {
                                     id="email"
                                     name="email"
                                     type="email"
+                                    value={formData.email}
+                                    onChange={handleChange}
                                     autoComplete="email"
                                     required
                                     className="block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-900 sm:text-sm sm:leading-6"
@@ -57,6 +86,8 @@ export default function Signup() {
                                     type="password"
                                     autoComplete="new-password"
                                     required
+                                    value={formData.password}
+                                    onChange={handleChange}
                                     className="block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-900 sm:text-sm sm:leading-6"
                                 />
                             </div>
