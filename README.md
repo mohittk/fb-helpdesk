@@ -49,19 +49,16 @@ This application is crafted to function as a Facebook Helpdesk tailored for busi
 ## Screenshots
 
 ### Login Page
-![Login Page](![image](https://github.com/mohittk/fb-helpdesk/assets/79041510/bea3a373-c8c6-4b7c-b561-32d32cd7e1fa)
-)
+![image](https://github.com/mohittk/fb-helpdesk/assets/79041510/bea3a373-c8c6-4b7c-b561-32d32cd7e1fa)
 
 ### Signup Page
-![Signup Page](![image](https://github.com/mohittk/fb-helpdesk/assets/79041510/f0855d44-5a69-4ae3-8e32-d37c0eced1ca)
-)
+![image](https://github.com/mohittk/fb-helpdesk/assets/79041510/f0855d44-5a69-4ae3-8e32-d37c0eced1ca)
+
 
 ### Chat Interface
-![Chat Interface](![Screenshot_20240216_005042](https://github.com/mohittk/fb-helpdesk/assets/79041510/744e9f71-9eab-4a0e-b242-37a9cf02ca0b)
-)
+![Screenshot_20240216_005042](https://github.com/mohittk/fb-helpdesk/assets/79041510/744e9f71-9eab-4a0e-b242-37a9cf02ca0b)
 
 ### Facebook Page Integration
-![Facebook Page Integration](![Screenshot_20240216_005012](https://github.com/mohittk/fb-helpdesk/assets/79041510/5444900d-ae3b-4114-90b0-a49abdbb0af2)
-)
+![Screenshot_20240216_005012](https://github.com/mohittk/fb-helpdesk/assets/79041510/5444900d-ae3b-4114-90b0-a49abdbb0af2)
 
 
